@@ -1,12 +1,23 @@
 <!doctype html><meta charset="utf-8"><title>EMK Signal — video review</title><style>body{font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;margin:0;padding:40px 24px;background:#fafafa;color:#18181b;max-width:960px;margin:0 auto}
 h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:32px 0 8px}p{color:#3f3f46}a{color:#1F3D7C}
 ol{padding-left:22px}li{margin:6px 0}.m{color:#71717a;font-size:13px}.card{background:#fff;border:1px solid #e4e4e7;border-radius:10px;padding:16px 18px;margin:12px 0}
-table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #e4e4e7;padding:4px 8px;text-align:left}pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:12px}</style>
+table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #e4e4e7;padding:4px 8px;text-align:left}pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:12px}
+.wiptab{font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid #d4d4d8;background:#fff;color:#52525b;cursor:pointer;margin-right:8px}.wiptab.active{background:#026241;color:#fff;border-color:#026241}</style>
 <h1>EMK Signal — video takes</h1><p class="m">The WIP card is the current work in progress — start there. Below it, the four full-length takes recorded so far (14 were recorded chasing fixes; these four span the real differences), latest first and collapsed — click a take's name to expand it.</p>
 <div class="card" style="border-color:#026241"><h2 style="margin-top:0">WIP <span style="font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#026241;color:#fff;border-radius:999px;padding:3px 9px;vertical-align:2px">in progress</span></h2>
 <p>Each scene is being redesigned and approved individually, screenshot by screenshot, before any of it is spliced into a real render.</p>
-<a href="wip-frames.html" style="display:inline-block;font-weight:600;padding:9px 18px;border-radius:8px;text-decoration:none;margin-right:10px;background:#026241;color:#fff">Frames →</a>
-<a href="wip-video.html" style="display:inline-block;font-weight:600;padding:9px 18px;border-radius:8px;text-decoration:none;margin-right:10px;background:#fff;color:#18181b;border:1px solid #d4d4d8">Video →</a></div>
+<div><button id="wipTabF" class="wiptab active">Frames</button><button id="wipTabV" class="wiptab">Video</button></div>
+<a href="wip-frames.html" id="wipPrevF" style="display:block;margin-top:12px"><img src="takes/wip/scene-08.3/05-card3.png" style="width:100%;border-radius:8px;border:1px solid #e4e4e7;cursor:pointer"></a>
+<a href="wip-video.html" id="wipPrevV" style="display:none;margin-top:12px;position:relative">
+<img src="takes/take-4/b1-crop-in.png" style="width:100%;border-radius:8px;border:1px solid #e4e4e7;cursor:pointer">
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px">&#9654;</span>
+</a>
+<script>(function(){
+var tf=document.getElementById('wipTabF'),tv=document.getElementById('wipTabV');
+var pf=document.getElementById('wipPrevF'),pv=document.getElementById('wipPrevV');
+tf.addEventListener('click',function(){pf.style.display='block';pv.style.display='none';tf.classList.add('active');tv.classList.remove('active')});
+tv.addEventListener('click',function(){pf.style.display='none';pv.style.display='block';tv.classList.add('active');tf.classList.remove('active')});
+})()</script></div>
 <div class="card"><details><summary style="cursor:pointer;font-size:17px;font-weight:600;color:#18181b">take-4 — current full-length take</summary><div style="margin-top:14px"><p><a href="take-4.mp4">take-4.mp4</a> · <a href="take-4-frames.html">frames</a> · <a href="take-4.srt">srt</a> · <a href="takes/take-4/sheet.png">contact sheet</a></p>
 <video controls preload="metadata" width="100%" src="take-4.mp4"></video>
 <details><summary>Review</summary><pre># Take 14 — review (Layer B rebuild + leads-list correction)
