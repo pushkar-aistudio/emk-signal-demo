@@ -431,7 +431,10 @@ html,body{font-family:"Geist Variable",-apple-system,BlinkMacSystemFont,"Segoe U
   .actbar{height:100%;border-radius:5px;background:var(--green)}
   tr:first-child .actbar{background:var(--green-d)}
   .actcell .actval{width:38px;flex:none;text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
-  #panel-responses .card{max-width:560px}
+  /* The whole block, not just the card, so a crop/highlight of #panel-responses (its
+     bounding box) is the actual content -- not the full page width with dead space
+     beside a narrow card. */
+  #panel-responses{max-width:560px}
   .msgResp{padding:22px 24px 20px}
   .msgResp .subk{font-size:11px;margin-bottom:14px}
   .msgResp .subk b{color:var(--ink);font-weight:700;font-size:13px}
@@ -495,6 +498,13 @@ html,body{font-family:"Geist Variable",-apple-system,BlinkMacSystemFont,"Segoe U
     <div class="body">
       <div class="asof" id="asof"></div>
 
+      <div class="blk" id="perfBlk"><div class="bh"><h2>Performance</h2><span class="r"><span class="pill" id="pLab"></span></span></div>
+        <div class="card"><div class="perfwrap">
+          <div class="perfhero" id="perfHero"></div>
+          <div class="perfchart"><div class="chtop"><span class="chk">Fit calls held and SALs converted</span><div class="seg sm" id="segG"><button data-g="month" aria-pressed="true">Month</button><button data-g="week" aria-pressed="false">Week</button></div></div>
+            <svg class="chart tall" id="perf" role="img" aria-label="Fit calls held and SALs converted over time"></svg><div class="clg" id="perfLg"></div></div>
+        </div><div class="note" id="perfNote"></div></div></div>
+
       <div class="blk" id="panel-activity"><div class="bh"><h2>Activity by salesperson</h2><span class="r"><span class="pill">This month</span></span></div>
         <div class="card"><div class="tw"><table class="d actTbl">
           <thead><tr><th>AE</th><th>SAL</th><th class="r">Meetings</th><th class="r">Contacted</th><th class="r">Avg. pipeline value</th></tr></thead>
@@ -506,41 +516,6 @@ html,body{font-family:"Geist Variable",-apple-system,BlinkMacSystemFont,"Segoe U
             <tr><td class="rn">Valentina Rizzo</td><td><div class="actcell"><div class="actbarwrap"><div class="actbar" style="width:33%"></div></div><span class="actval">2</span></div></td><td class="r">4</td><td class="r">163</td><td class="r">$47k</td></tr>
           </tbody></table></div>
           <div class="note">SAL = fit calls scored 7 or above. Contacted = leads emailed or called this month. Avg. pipeline value = average open-opportunity size across each rep's SAL accounts.</div></div></div>
-
-      <div class="blk" id="panel-responses"><div class="bh"><h2>Message response rate</h2><span class="r"><span class="pill">Last 30 days</span></span></div>
-        <div class="card"><div class="msgResp">
-          <div class="subk">Message response · <b>428 replies</b></div>
-          <div class="rqbar">
-            <i style="width:34%;background:var(--green)">34%</i>
-            <i style="width:24%;background:var(--blue)">24%</i>
-            <i style="width:30%;background:var(--amber)">30%</i>
-            <i style="width:9%;background:var(--ink-4)"></i>
-            <i style="width:3%;background:var(--rose)"></i>
-          </div>
-          <div class="rqr"><span class="sw" style="background:var(--green)"></span><span>Interested</span><span class="n">146</span><span class="p">34%</span></div>
-          <div class="rqr"><span class="sw" style="background:var(--blue)"></span><span>Asked for information</span><span class="n">103</span><span class="p">24%</span></div>
-          <div class="rqr"><span class="sw" style="background:var(--amber)"></span><span>Not right now</span><span class="n">128</span><span class="p">30%</span></div>
-          <div class="rqr"><span class="sw" style="background:var(--ink-4)"></span><span>Not interested</span><span class="n">38</span><span class="p">9%</span></div>
-          <div class="rqr"><span class="sw" style="background:var(--rose)"></span><span>Opted out</span><span class="n">13</span><span class="p">3%</span></div>
-        </div></div></div>
-
-      <div class="blk" id="panel-stalled"><div class="bh"><h2>Needs action</h2><span class="r"><span class="pill">Today view · sorted by time waiting</span></span></div>
-        <div class="card"><div class="tw"><table class="d needsTbl"><thead><tr><th>Account</th><th>Sector</th><th>Owner</th><th>Status</th><th class="r">Waiting</th><th class="r"></th></tr></thead>
-          <tbody>
-            <tr><td><a class="colink" href="account.html">Galvani Ambiente S.p.A.</a></td><td>Not classified</td><td id="stalled-owner">Francesca Romano</td><td><span class="tag bad">Held · no score</span></td><td class="r" id="stalled-last-activity"><span class="wt r">21d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
-            <tr><td><a class="colink" href="account.html">Mantova Ambiente S.p.A.</a></td><td>Telecom &amp; media</td><td>Sofia Marchetti</td><td><span class="tag warn">Sent back to SDR</span></td><td class="r"><span class="wt r">15d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
-            <tr><td><a class="colink" href="account.html">Pravello Ambiente S.r.l.</a></td><td>Retail &amp; e-commerce</td><td>Francesca Romano</td><td><span class="tag warn">Meeting scheduled</span></td><td class="r"><span class="wt a">9d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
-            <tr><td><a class="colink" href="account.html">Roveda Facility S.r.l.</a></td><td>Facility services</td><td>Camilla Sartori</td><td><span class="tag">Scored 5</span></td><td class="r"><span class="wt a">7d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
-            <tr><td><a class="colink" href="account.html">Sestriere Sistemi S.r.l.</a></td><td>Not classified</td><td>Elena Bruni</td><td><span class="tag ok">Engaged, no meeting</span></td><td class="r"><span class="wt">2d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
-          </tbody></table></div>
-          <div class="note">A today view over all leads, following every filter except the period; waiting is days since the record was last modified.</div></div></div>
-
-      <div class="blk" id="perfBlk"><div class="bh"><h2>Performance</h2><span class="r"><span class="pill" id="pLab"></span></span></div>
-        <div class="card"><div class="perfwrap">
-          <div class="perfhero" id="perfHero"></div>
-          <div class="perfchart"><div class="chtop"><span class="chk">Fit calls held and SALs converted</span><div class="seg sm" id="segG"><button data-g="month" aria-pressed="true">Month</button><button data-g="week" aria-pressed="false">Week</button></div></div>
-            <svg class="chart tall" id="perf" role="img" aria-label="Fit calls held and SALs converted over time"></svg><div class="clg" id="perfLg"></div></div>
-        </div><div class="note" id="perfNote"></div></div></div>
 
       <div class="blk" id="covBlk"><div class="bh"><h2>Account coverage</h2><span class="r"><span class="pill">Enriched → reached out → responded</span></span></div>
         <div class="card"><div class="prewrap" id="cov"></div><div class="note" id="covNote"></div></div></div>
@@ -566,6 +541,23 @@ html,body{font-family:"Geist Variable",-apple-system,BlinkMacSystemFont,"Segoe U
         <div class="card"><div class="tabs" id="mTabs"><button data-k="source" aria-selected="true">Lead Source</button><button data-k="detail" aria-selected="false">Lead Source Detail</button><button data-k="sector" aria-selected="false">Sector</button><button data-k="country" aria-selected="false">Country</button><button data-k="platform" aria-selected="false">Incumbent platform <sup class="prov sig">Signal</sup></button></div>
           <div class="tw"><table class="d"><thead id="mHead"></thead><tbody id="mBody"></tbody><tfoot id="mFoot"></tfoot></table></div><div class="note" id="mNote"></div></div></div>
 
+      <div class="blk" id="panel-responses"><div class="bh"><h2>Message response rate</h2><span class="r"><span class="pill">Last 30 days</span></span></div>
+        <div class="card"><div class="msgResp">
+          <div class="subk">Message response · <b>428 replies</b></div>
+          <div class="rqbar">
+            <i style="width:34%;background:var(--green)">34%</i>
+            <i style="width:24%;background:var(--blue)">24%</i>
+            <i style="width:30%;background:var(--amber)">30%</i>
+            <i style="width:9%;background:var(--ink-4)"></i>
+            <i style="width:3%;background:var(--rose)"></i>
+          </div>
+          <div class="rqr"><span class="sw" style="background:var(--green)"></span><span>Interested</span><span class="n">146</span><span class="p">34%</span></div>
+          <div class="rqr"><span class="sw" style="background:var(--blue)"></span><span>Asked for information</span><span class="n">103</span><span class="p">24%</span></div>
+          <div class="rqr"><span class="sw" style="background:var(--amber)"></span><span>Not right now</span><span class="n">128</span><span class="p">30%</span></div>
+          <div class="rqr"><span class="sw" style="background:var(--ink-4)"></span><span>Not interested</span><span class="n">38</span><span class="p">9%</span></div>
+          <div class="rqr"><span class="sw" style="background:var(--rose)"></span><span>Opted out</span><span class="n">13</span><span class="p">3%</span></div>
+        </div></div></div>
+
       <div class="blk" id="pplBlk"><div class="bh"><h2>By people</h2><span class="r"><span class="pill">Through to won and lost</span></span></div>
         <div class="card"><div class="sdrcard" id="sdr"></div><div class="pchart" id="aes"></div><div class="note" id="pNote"></div></div></div>
 
@@ -590,6 +582,17 @@ html,body{font-family:"Geist Variable",-apple-system,BlinkMacSystemFont,"Segoe U
             <div class="clg" style="padding-bottom:6px"><span><i style="background:var(--blue)"></i>Emails</span><span><i style="background:var(--green)"></i>Calls</span></div>
             <div class="kpis" id="actKpi"></div></div>
           <div class="note" id="chNote"></div></div></div>
+
+      <div class="blk" id="panel-stalled"><div class="bh"><h2>Needs action</h2><span class="r"><span class="pill">Today view · sorted by time waiting</span></span></div>
+        <div class="card"><div class="tw"><table class="d needsTbl"><thead><tr><th>Account</th><th>Sector</th><th>Owner</th><th>Status</th><th class="r">Waiting</th><th class="r"></th></tr></thead>
+          <tbody>
+            <tr><td><a class="colink" href="account.html">Galvani Ambiente S.p.A.</a></td><td>Not classified</td><td id="stalled-owner">Francesca Romano</td><td><span class="tag bad">Held · no score</span></td><td class="r" id="stalled-last-activity"><span class="wt r">21d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
+            <tr><td><a class="colink" href="account.html">Mantova Ambiente S.p.A.</a></td><td>Telecom &amp; media</td><td>Sofia Marchetti</td><td><span class="tag warn">Sent back to SDR</span></td><td class="r"><span class="wt r">15d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
+            <tr><td><a class="colink" href="account.html">Pravello Ambiente S.r.l.</a></td><td>Retail &amp; e-commerce</td><td>Francesca Romano</td><td><span class="tag warn">Meeting scheduled</span></td><td class="r"><span class="wt a">9d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
+            <tr><td><a class="colink" href="account.html">Roveda Facility S.r.l.</a></td><td>Facility services</td><td>Camilla Sartori</td><td><span class="tag">Scored 5</span></td><td class="r"><span class="wt a">7d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
+            <tr><td><a class="colink" href="account.html">Sestriere Sistemi S.r.l.</a></td><td>Not classified</td><td>Elena Bruni</td><td><span class="tag ok">Engaged, no meeting</span></td><td class="r"><span class="wt">2d</span></td><td class="r"><a class="act" href="account.html">Open</a></td></tr>
+          </tbody></table></div>
+          <div class="note">A today view over all leads, following every filter except the period; waiting is days since the record was last modified.</div></div></div>
 
       <div class="blk"><div class="bh"><h2>Score validation</h2><span class="r"><span class="pill">Does the score predict the fit call</span></span></div>
         <div class="card"><div class="tabs" id="sTabs"><button data-k="eng" aria-selected="true">Engagement score · Salesforce</button><button data-k="sig" aria-selected="false">Account Fit Score <sup class="prov sig">Signal</sup></button></div>
