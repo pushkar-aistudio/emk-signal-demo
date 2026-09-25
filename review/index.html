@@ -2,75 +2,13 @@
 h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:32px 0 8px}p{color:#3f3f46}a{color:#1F3D7C}
 ol{padding-left:22px}li{margin:6px 0}.m{color:#71717a;font-size:13px}.card{background:#fff;border:1px solid #e4e4e7;border-radius:10px;padding:16px 18px;margin:12px 0}
 table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #e4e4e7;padding:4px 8px;text-align:left}pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:12px}</style>
-<h1>EMK Signal — video takes</h1><p class="m">Four takes, oldest to latest, chosen for the real differences between them (14 were recorded; most were same-system bugfixes). Each: the mastered MP4, one frame per storyboard checkpoint, and the beat-by-beat score.</p>
-<div class="card"><h2 style="margin-top:0">take-1</h2>
-<p><a href="take-1.mp4">take-1.mp4</a> · <a href="take-1-frames.html">frames</a> · <a href="takes/take-1/sheet.png">contact sheet</a></p>
-<video controls preload="metadata" width="100%" src="take-1.mp4"></video>
-<details><summary>Review</summary><pre># Take 01 — review
-
-`videos/take-1.mp4` · 1:02 · from `recordings/emk-signal-2026-09-24-21-33-40.webm`
-Frames: `docs/take-1-frames.html` · sheet `docs/takes/take-1/sheet.png`
-Seam report: all 0.0 s; no beat over. VIDEO_SEEK 2.203.
-
-Scores 0–10. CONTENT · PRODUCT · OVERLAY · PACING (see `docs/QC-CHECKLIST.md`).
-
-| Beat | C | P | O | Pa | What is wrong |
-|---|---|---|---|---|---|
-| 1 Leads → zoom → labels → pull back | 7 | 10 | 5 | 8 | Zoom lands on the Viridea row on cue. The four labels are S-size pills under a 2× UI: they read as afterthoughts, and they sit across the Falchetti row text. Need the L size, aligned under the Viridea row. |
-| 2 Name + tagline | 10 | 10 | 9 | 10 | Product visible through the scrim, lockup on "EMK Signal", sub-line on "proprietary", gone on "just that". Logo inverted to white reads fine. |
-| 3 Sources → profile → Complete the picture | 5 | 10 | 3 | 6 | Cards pop in on their words (CRM 1.9, Outlook 2.4, slide 3.3) but are small and parked on the header. The "enriches" moment fails: the page shrank to half size (zoom scale &lt; 1 from an oversized region) and no ring/label appeared (anchors "TOTAL EMP." / "LEAD SCORE" are CSS-uppercased; the finder is case-sensitive). |
-| 4 Similar customers → signal → row rises | 9 | 10 | 7 | 9 | Dialog + "Find similar prospects" on cue. On "buying signals" the real table re-sorts and Marco Bellini lands at the top (priority 131) with "Identify why now" and the source callout. Ring wraps only the contact cell; label covers the row beneath. |
-| 5 Contact view: role, details, channels | 9 | 10 | 8 | 9 | Role and email + phone ringed on cue; Email / LinkedIn / Call talking points on their words beside the real tabs. Crop cuts the topbar in half. |
-| 6 Italian draft, two sentences | 8 | 10 | 5 | 8 | Both sentences highlight with the rule on cue; both callouts are clipped at the right frame edge, and the draft is not zoomed (same scale&lt;1 bug), so the Italian is small. |
-| 7 Edit → send → Tasks → three SCC crops | 4 | 8 | 3 | 5 | Edit works (real Regenerate; phrase highlighted; "Draft updated" toast). Send is clicked but the cut comes before its toast. Tasks zoom is right but the ring wraps the whole list and the annotation floats below it. **All three Command Centre crops land on the wrong sections** (the page finishes rendering after the scroll, so the target moves), the sticky bars float mid-frame under the wrapper transform, and the injected cursor sits at 0,0 on the new document. "Zoominfo" was visible in one crop (raw lead-source value; scrubbed now). |
-| 8 Account view → end card | 10 | 10 | 9 | 9 | Account view held; end card logo → line → rule in the last three seconds. |
-
-**Pixel-level:** cursor at 0,0 on the SCC (fixed: install off-screen); callouts clipped (fixed: flip left when they would overflow the safe area); no Service Key / Servion / test strings on any frame; one vendor name (Zoominfo) on the SCC (scrubbed).
-
-## Fixes carried into take 02
-
-1. Text finder: case-insensitive, skips `&lt;script>/&lt;style>` text, can climb to a `TR` or to the first ancestor taller than N px (rows) or wider than N px (cards).
-2. `zoomRegion` never scales below 1.
-3. Callouts flip to the left of their anchor when they would leave the 48 px safe area.
-4. Cursor installs off-screen on every document.
-5. Beat 1 labels at the L size, under the Viridea row.
-6. Beat 3 cards larger and centred; ring + label anchored on the real stats strip and Lead Intelligence tiles; zoom to the two cards.
-7. Beat 4 ring on the whole row; label + source callout in the filter strip above the table so no row is covered.
-8. Beat 5 crop from y = 0.
-9. Beat 6 zoom 1.5 on the draft card.
-10. Beat 7 Tasks ring on the row; push clicked earlier and the cut after its toast; SCC: wait for layout to settle, scroll the block under the sticky bars, scale that block alone from its top-left, ring the owner and waiting cells of the first stalled row by position.
-</pre></details></div><div class="card"><h2 style="margin-top:0">take-2</h2>
-<p><a href="take-2.mp4">take-2.mp4</a> · <a href="take-2-frames.html">frames</a> · <a href="take-2.srt">srt</a> · <a href="takes/take-2/sheet.png">contact sheet</a></p>
-<video controls preload="metadata" width="100%" src="take-2.mp4"></video>
-<details><summary>Review</summary><pre># Take 04 — review
-
-`videos/take-2.mp4` · 1:02.08 · seams all 0.0 s · VIDEO_SEEK 2.159
-Frames `docs/take-2-frames.html` · sheet `docs/takes/take-2/sheet.png`
-Sync probe `docs/takes/take-2/sync/b2-strip.png`: the beat-2 scrim is absent at mark −0.2 s and present at +0.2 s (scheduled at +0.05 with a 300 ms fade) → picture within 0.2 s of the voice. Send probe `sync/b7-strip.png`: pull-back complete at +2.5 s with the real "Draft ready in Outlook" panel and the "Draft pushed to Outlook" toast in frame, no floating overlays.
-
-| Beat | CONTENT | PRODUCT | OVERLAY | PACING | Notes |
-|---|---|---|---|---|---|
-| 1 | 10 | 10 | 9 | 10 | The four L pills sit over the Falchetti row (the row beneath). Acceptable by the style rule (not the pointed-at data); a 9 because a purist would want them in the gutter. |
-| 2 | 10 | 10 | 10 | 10 | |
-| 3 | 10 | 10 | 9 | 9 | "Complete the picture" is tight against the stats strip; 0.7 s of the beat between the cards clearing and the zoom is deliberate breathing room. |
-| 4 | 10 | 10 | 10 | 9 | 4.3 s carries the dialog, a cut, the re-sort and two labels; dense, not rushed, but the densest beat. The row rise is the real table re-sorting on real data. |
-| 5 | 10 | 10 | 10 | 10 | |
-| 6 | 10 | 10 | 10 | 10 | |
-| 7 | 10 | 10 | 10 | 9 | Eight things in 11.3 s. The SCC arrives at ~5.6 s, inside "Command Centre" (5.5–6.3) — 0.2 s of margin. |
-| 8 | 10 | 10 | 10 | 10 | |
-
-Pixel-level: no frame shows Service Key / ServiceKey / Servion / Carle / Vivira / test / demo / lorem / TBD / placeholder; no Outlook banner; EMK logo on every product frame; no loading state; cursor only in beats 3, 4, 5, 7; no clipped overlay.
-
-## Final pacing pass (against `refs/` and the "product launch" brief)
-
-Compared with the Ascend reel (one idea per ~6 s, full-frame lockups) and the L3 walkthrough (continuous product, one cursor), take 04 sits between them: continuous product, one idea per cue, labels that leave before the next idea. Nothing changed after this pass — the remaining 9s are judgement calls for Pushkar (see `docs/MORNING-REPORT.md` §4), not defects, and each fix would cost a re-record for no certain gain.
-
-**Take 04 is the best take.**
-</pre></details></div><div class="card"><h2 style="margin-top:0">take-3</h2>
-<p><a href="take-3.mp4">take-3.mp4</a> · <a href="take-3-frames.html">frames</a> · <a href="takes/take-3/sheet.png">contact sheet</a></p>
-<video controls preload="metadata" width="100%" src="take-3.mp4"></video>
-<details><summary>Review</summary><pre></pre></details></div><div class="card"><h2 style="margin-top:0">take-4 — latest, current best</h2>
-<p><a href="take-4.mp4">take-4.mp4</a> · <a href="take-4-frames.html">frames</a> · <a href="take-4.srt">srt</a> · <a href="takes/take-4/sheet.png">contact sheet</a></p>
+<h1>EMK Signal — video takes</h1><p class="m">The WIP card is the current work in progress — start there. Below it, the four full-length takes recorded so far (14 were recorded chasing fixes; these four span the real differences), latest first and collapsed — click a take's name to expand it.</p>
+<div class="card" style="border-color:#026241"><h2 style="margin-top:0">WIP — scene-by-scene rebuild <span style="font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#026241;color:#fff;border-radius:999px;padding:3px 9px;vertical-align:2px">in progress</span></h2>
+<p>Scenes 1–3 are redesigned and shown as frames below (new visual language, screenshot-reviewed with Pushkar scene by scene) — no full new video yet, since splicing them in would need beats 4–9's choreography brought back in sync with the current 9-line narration first, which hasn't happened.</p>
+<p>The video below is <b>take-4</b>, the current best full-length take: old visuals throughout, but real voice and pacing — useful for overall shape and timing while reading the new frames.</p>
+<p><a href="wip-frames.html">frames →</a> (new design for scenes 1–3, narration text included, plus take-4's frames for every beat not yet redone)</p>
+<video controls preload="metadata" width="100%" src="take-4.mp4"></video></div>
+<div class="card"><details><summary style="cursor:pointer;font-size:17px;font-weight:600;color:#18181b">take-4 — current full-length take</summary><div style="margin-top:14px"><p><a href="take-4.mp4">take-4.mp4</a> · <a href="take-4-frames.html">frames</a> · <a href="take-4.srt">srt</a> · <a href="takes/take-4/sheet.png">contact sheet</a></p>
 <video controls preload="metadata" width="100%" src="take-4.mp4"></video>
 <details><summary>Review</summary><pre># Take 14 — review (Layer B rebuild + leads-list correction)
 
@@ -127,5 +65,68 @@ now the frame that carries the whole argument: a real number, a real badge, a re
 on the screen where the audience actually looks for it.
 
 **Take 14 is the corrected best take**, replacing take 04.
-</pre></details></div>
+</pre></details></div></details></div><div class="card"><details><summary style="cursor:pointer;font-size:17px;font-weight:600;color:#18181b">take-3</summary><div style="margin-top:14px"><p><a href="take-3.mp4">take-3.mp4</a> · <a href="take-3-frames.html">frames</a> · <a href="takes/take-3/sheet.png">contact sheet</a></p>
+<video controls preload="metadata" width="100%" src="take-3.mp4"></video>
+<details><summary>Review</summary><pre></pre></details></div></details></div><div class="card"><details><summary style="cursor:pointer;font-size:17px;font-weight:600;color:#18181b">take-2</summary><div style="margin-top:14px"><p><a href="take-2.mp4">take-2.mp4</a> · <a href="take-2-frames.html">frames</a> · <a href="take-2.srt">srt</a> · <a href="takes/take-2/sheet.png">contact sheet</a></p>
+<video controls preload="metadata" width="100%" src="take-2.mp4"></video>
+<details><summary>Review</summary><pre># Take 04 — review
+
+`videos/take-2.mp4` · 1:02.08 · seams all 0.0 s · VIDEO_SEEK 2.159
+Frames `docs/take-2-frames.html` · sheet `docs/takes/take-2/sheet.png`
+Sync probe `docs/takes/take-2/sync/b2-strip.png`: the beat-2 scrim is absent at mark −0.2 s and present at +0.2 s (scheduled at +0.05 with a 300 ms fade) → picture within 0.2 s of the voice. Send probe `sync/b7-strip.png`: pull-back complete at +2.5 s with the real "Draft ready in Outlook" panel and the "Draft pushed to Outlook" toast in frame, no floating overlays.
+
+| Beat | CONTENT | PRODUCT | OVERLAY | PACING | Notes |
+|---|---|---|---|---|---|
+| 1 | 10 | 10 | 9 | 10 | The four L pills sit over the Falchetti row (the row beneath). Acceptable by the style rule (not the pointed-at data); a 9 because a purist would want them in the gutter. |
+| 2 | 10 | 10 | 10 | 10 | |
+| 3 | 10 | 10 | 9 | 9 | "Complete the picture" is tight against the stats strip; 0.7 s of the beat between the cards clearing and the zoom is deliberate breathing room. |
+| 4 | 10 | 10 | 10 | 9 | 4.3 s carries the dialog, a cut, the re-sort and two labels; dense, not rushed, but the densest beat. The row rise is the real table re-sorting on real data. |
+| 5 | 10 | 10 | 10 | 10 | |
+| 6 | 10 | 10 | 10 | 10 | |
+| 7 | 10 | 10 | 10 | 9 | Eight things in 11.3 s. The SCC arrives at ~5.6 s, inside "Command Centre" (5.5–6.3) — 0.2 s of margin. |
+| 8 | 10 | 10 | 10 | 10 | |
+
+Pixel-level: no frame shows Service Key / ServiceKey / Servion / Carle / Vivira / test / demo / lorem / TBD / placeholder; no Outlook banner; EMK logo on every product frame; no loading state; cursor only in beats 3, 4, 5, 7; no clipped overlay.
+
+## Final pacing pass (against `refs/` and the "product launch" brief)
+
+Compared with the Ascend reel (one idea per ~6 s, full-frame lockups) and the L3 walkthrough (continuous product, one cursor), take 04 sits between them: continuous product, one idea per cue, labels that leave before the next idea. Nothing changed after this pass — the remaining 9s are judgement calls for Pushkar (see `docs/MORNING-REPORT.md` §4), not defects, and each fix would cost a re-record for no certain gain.
+
+**Take 04 is the best take.**
+</pre></details></div></details></div><div class="card"><details><summary style="cursor:pointer;font-size:17px;font-weight:600;color:#18181b">take-1</summary><div style="margin-top:14px"><p><a href="take-1.mp4">take-1.mp4</a> · <a href="take-1-frames.html">frames</a> · <a href="takes/take-1/sheet.png">contact sheet</a></p>
+<video controls preload="metadata" width="100%" src="take-1.mp4"></video>
+<details><summary>Review</summary><pre># Take 01 — review
+
+`videos/take-1.mp4` · 1:02 · from `recordings/emk-signal-2026-09-24-21-33-40.webm`
+Frames: `docs/take-1-frames.html` · sheet `docs/takes/take-1/sheet.png`
+Seam report: all 0.0 s; no beat over. VIDEO_SEEK 2.203.
+
+Scores 0–10. CONTENT · PRODUCT · OVERLAY · PACING (see `docs/QC-CHECKLIST.md`).
+
+| Beat | C | P | O | Pa | What is wrong |
+|---|---|---|---|---|---|
+| 1 Leads → zoom → labels → pull back | 7 | 10 | 5 | 8 | Zoom lands on the Viridea row on cue. The four labels are S-size pills under a 2× UI: they read as afterthoughts, and they sit across the Falchetti row text. Need the L size, aligned under the Viridea row. |
+| 2 Name + tagline | 10 | 10 | 9 | 10 | Product visible through the scrim, lockup on "EMK Signal", sub-line on "proprietary", gone on "just that". Logo inverted to white reads fine. |
+| 3 Sources → profile → Complete the picture | 5 | 10 | 3 | 6 | Cards pop in on their words (CRM 1.9, Outlook 2.4, slide 3.3) but are small and parked on the header. The "enriches" moment fails: the page shrank to half size (zoom scale &lt; 1 from an oversized region) and no ring/label appeared (anchors "TOTAL EMP." / "LEAD SCORE" are CSS-uppercased; the finder is case-sensitive). |
+| 4 Similar customers → signal → row rises | 9 | 10 | 7 | 9 | Dialog + "Find similar prospects" on cue. On "buying signals" the real table re-sorts and Marco Bellini lands at the top (priority 131) with "Identify why now" and the source callout. Ring wraps only the contact cell; label covers the row beneath. |
+| 5 Contact view: role, details, channels | 9 | 10 | 8 | 9 | Role and email + phone ringed on cue; Email / LinkedIn / Call talking points on their words beside the real tabs. Crop cuts the topbar in half. |
+| 6 Italian draft, two sentences | 8 | 10 | 5 | 8 | Both sentences highlight with the rule on cue; both callouts are clipped at the right frame edge, and the draft is not zoomed (same scale&lt;1 bug), so the Italian is small. |
+| 7 Edit → send → Tasks → three SCC crops | 4 | 8 | 3 | 5 | Edit works (real Regenerate; phrase highlighted; "Draft updated" toast). Send is clicked but the cut comes before its toast. Tasks zoom is right but the ring wraps the whole list and the annotation floats below it. **All three Command Centre crops land on the wrong sections** (the page finishes rendering after the scroll, so the target moves), the sticky bars float mid-frame under the wrapper transform, and the injected cursor sits at 0,0 on the new document. "Zoominfo" was visible in one crop (raw lead-source value; scrubbed now). |
+| 8 Account view → end card | 10 | 10 | 9 | 9 | Account view held; end card logo → line → rule in the last three seconds. |
+
+**Pixel-level:** cursor at 0,0 on the SCC (fixed: install off-screen); callouts clipped (fixed: flip left when they would overflow the safe area); no Service Key / Servion / test strings on any frame; one vendor name (Zoominfo) on the SCC (scrubbed).
+
+## Fixes carried into take 02
+
+1. Text finder: case-insensitive, skips `&lt;script>/&lt;style>` text, can climb to a `TR` or to the first ancestor taller than N px (rows) or wider than N px (cards).
+2. `zoomRegion` never scales below 1.
+3. Callouts flip to the left of their anchor when they would leave the 48 px safe area.
+4. Cursor installs off-screen on every document.
+5. Beat 1 labels at the L size, under the Viridea row.
+6. Beat 3 cards larger and centred; ring + label anchored on the real stats strip and Lead Intelligence tiles; zoom to the two cards.
+7. Beat 4 ring on the whole row; label + source callout in the filter strip above the table so no row is covered.
+8. Beat 5 crop from y = 0.
+9. Beat 6 zoom 1.5 on the draft card.
+10. Beat 7 Tasks ring on the row; push clicked earlier and the cut after its toast; SCC: wait for layout to settle, scroll the block under the sticky bars, scale that block alone from its top-left, ring the owner and waiting cells of the first stalled row by position.
+</pre></details></div></details></div>
 <p class="m"><a href="video-script.docx">video-script.docx</a> · <a href="../">product screens</a></p>
