@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+  Beat 9 closing lockup, built to match refs/Ascend Video v3.mp4's own closing lockup
+  frame-for-frame. Measured at native 25fps (0.04s/frame): docs/ref-frames/ascend-close/*.png,
+  tiled at docs/ref-frames/ascend-close-sheet3.png (absolute source timestamps ~67.5-69.3s).
+
+  Ascend's closing timeline (t=0 at the start of the wipe, i.e. source t≈67.66s):
+    t 0.00        still on the prior dark "stats" scene, static
+    t 0.16–0.32   a WHITE CIRCLE WIPE expands from the centre stat icon's position,
+                  covering the frame -- this is the dark-to-light transition itself,
+                  not a fade and not a hard cut
+    t 0.36–0.44   "EMK Capital" appears INSTANTLY, fully formed -- no typewriter here,
+                  unlike the opening lockup
+    t 0.44–0.84   holds on the wordmark alone, ~0.4s
+    t 0.84–0.92   a vertical divider "|" fades in
+    t 0.92–1.16   the partner mark (Ascend's "A" logo) draws in beside the divider, ~0.24s
+    t 1.16–1.40   a thin rule appears under the wordmark; tagline begins revealing
+    t 1.40–1.64   tagline finishes revealing, ONE WORD AT A TIME (not per-character),
+                  ~6 words over ~0.48s, so roughly 80ms/word
+    t 1.64+       holds; a soft gradient arc fades in at the bottom of the frame
+
+  Deviations from Ascend, and why (see docs/LOCKUP-COMPARE.md):
+    - No divider + partner mark. Ascend's closing co-brands two DIFFERENT entities (EMK
+      Capital, the parent; Ascend, the product) with a divider between them. Our lockup is
+      a single entity -- "EMK Signal" already names both parent and product -- so there is
+      no second mark to divide against. Everything else (the iris wipe, the instant
+      wordmark appearance, the rule + word-by-word tagline, the closing gradient arc) is
+      reproduced as measured.
+    - Tagline is Shrey's actual closing line, not Ascend's.
+
+  Exposes window.__in() (plays the wipe, then the wordmark, in one call) and
+  window.__out() (holds -- there is no fade-out for this one; it's meant to be the last
+  thing on screen, matching Ascend's own ending, which cuts to black rather than fading).
+  window.__in(cb) calls cb() once the tagline has finished revealing.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1600px; height: 900px; overflow: hidden; background: #18181B; }
+  body { position: relative; font-family: "Geist Variable", -apple-system, sans-serif; }
+
+  /* Pre-wipe: dark, stands in for whatever beat 9's account-view push-in has settled on. */
+  #pre { position: absolute; inset: 0; background: linear-gradient(160deg, #1a0d12 0%, #0d1526 100%); }
+
+  /* The wipe itself: a circle that grows from the centre stat-icon's position (here just
+     frame-centre, since we have no stat icons) until it covers the frame. */
+  #wipe {
+    position: absolute; left: 50%; top: 50%; width: 0; height: 0; border-radius: 50%;
+    background: #fff; transform: translate(-50%, -50%);
+    transition: width 320ms cubic-bezier(.2,.7,.2,1), height 320ms cubic-bezier(.2,.7,.2,1);
+  }
+  #wipe.grow { width: 3200px; height: 3200px; }
+
+  .card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; opacity: 0; }
+  .card.show { opacity: 1; }
+
+  #wordmark { display: flex; align-items: baseline; gap: 0; }
+  #wordmark span { font-family: Georgia, "Times New Roman", serif; font-size: 128px; font-weight: 600; letter-spacing: -.01em; }
+  #wordmark .e { color: #8C2232; } #wordmark .m { color: #1F3D7C; } #wordmark .k { color: #026241; } #wordmark .rest { color: #1F3D7C; margin-left: 4px; }
+
+  #tagline-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  #rule { width: 64px; height: 2px; background: #8C2232; transform: scaleX(0); transform-origin: 50%; transition: transform 220ms cubic-bezier(.2,.7,.2,1); }
+  #rule.show { transform: scaleX(1); }
+  #tagline { font-family: Georgia, "Times New Roman", serif; font-size: 27px; color: #3f3f46; text-align: center; }
+  #tagline .word { opacity: 0; transition: opacity 140ms ease; }
+  #tagline .word.on { opacity: 1; }
+
+  #arc {
+    position: absolute; left: 50%; bottom: -420px; width: 1400px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 0%, rgba(140,34,50,.18), rgba(31,61,124,.14) 55%, transparent 75%);
+    transform: translateX(-50%); opacity: 0; transition: opacity 600ms ease;
+  }
+  #arc.show { opacity: 1; }
+</style>
+</head>
+<body>
+  <div id="pre"></div>
+  <div id="wipe"></div>
+  <div class="card" id="card">
+    <div id="wordmark">
+      <span class="e">E</span><span class="m">M</span><span class="k">K</span><span class="rest">&nbsp;Signal</span>
+    </div>
+    <div id="tagline-wrap">
+      <div id="rule"></div>
+      <div id="tagline"><span id="tagline-words"></span></div>
+    </div>
+  </div>
+  <div id="arc"></div>
+
+<script>
+  var TAGLINE = "Collective knowledge. More time with customers.";
+
+  var wipe = document.getElementById('wipe'), card = document.getElementById('card');
+  var rule = document.getElementById('rule'), taglineWords = document.getElementById('tagline-words'), arc = document.getElementById('arc');
+
+  window.__in = function (cb) {
+    // t=0.00-0.16: hold on the dark pre-scene (caller should already be here)
+    setTimeout(function () {
+      // t=0.16: wipe starts, 320ms grow (matches the measured ~0.16-0.32s expansion,
+      // stretched slightly since our circle must cover more relative area at 1600x900)
+      wipe.classList.add('grow');
+    }, 160);
+    setTimeout(function () {
+      // t=0.44-ish: wordmark appears INSTANTLY, no typewriter
+      card.classList.add('show');
+    }, 440);
+    setTimeout(function () {
+      // t=0.84: rule draws
+      rule.classList.add('show');
+    }, 840);
+    setTimeout(function () {
+      // t=1.16: tagline begins, one word at a time, ~90ms apart
+      var words = TAGLINE.split(' ');
+      taglineWords.innerHTML = words.map(function (w) { return '<span class="word">' + w + '</span>'; }).join(' ');
+      var spans = taglineWords.querySelectorAll('.word');
+      spans.forEach(function (s, i) { setTimeout(function () { s.classList.add('on'); }, i * 90); });
+      setTimeout(function () {
+        arc.classList.add('show');
+        if (cb) cb();
+      }, words.length * 90 + 200);
+    }, 1160);
+  };
+
+  window.__out = function () { /* no-op: this is the film's last frame, matching Ascend's cut-to-black rather than a fade */ };
+</script>
+</body>
+</html>
