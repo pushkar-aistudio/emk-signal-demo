@@ -1,0 +1,70 @@
+<!doctype html><meta charset="utf-8"><title>EMK Signal — first full-draft assembly</title><style>body{font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;margin:0;padding:40px 24px;background:#fafafa;color:#18181b;max-width:960px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:32px 0 8px}p{color:#3f3f46}a{color:#1F3D7C}
+ol{padding-left:22px}li{margin:6px 0}.m{color:#71717a;font-size:13px}.card{background:#fff;border:1px solid #e4e4e7;border-radius:10px;padding:16px 18px;margin:12px 0}
+table{border-collapse:collapse;font-size:13px;width:100%}td,th{border:1px solid #e4e4e7;padding:5px 8px;text-align:left}
+.disclaimer{background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:8px;padding:12px 16px;font-weight:600;margin-bottom:16px}
+.warn{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d;border-radius:8px;padding:12px 16px;margin:12px 0}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:2px;background:#8C2232;color:#fff}
+</style>
+<h1>EMK Signal — first full-draft assembly <span class="badge">v1, draft</span></h1>
+<div class="disclaimer">This is the first time all nine beats (ten rows — beat 7 covers both 7a/7b) have been
+concatenated into one video. It is a first draft to react to, not a finished cut — expect rough transition
+seams, exactly like the last project's single-take assembly. A second pass will do the deep frame-by-frame
+QC; this page only confirms the assembly holds together.</div>
+
+<video controls preload="metadata" width="100%" src="emk-signal-final-draft-v1.mp4" style="border-radius:8px;border:1px solid #e4e4e7;background:#000"></video>
+<p class="m"><a href="emk-signal-final-draft-v1.mp4">emk-signal-final-draft-v1.mp4</a> ·
+<a href="emk-signal-final-draft-v1.srt">emk-signal-final-draft-v1.srt</a> · duration ~1:23.5</p>
+
+<h2>What this is</h2>
+<p>Beat order: 1 → 2 → 3 → 4 → 4b → 5 → 6 → 7 → 8 → 9, confirmed against
+<a href="../../docs/SCRIPT-DRAFT.md">docs/SCRIPT-DRAFT.md</a> and <a href="../../docs/BEAT-FIT-ANALYSIS.md">docs/BEAT-FIT-ANALYSIS.md</a>.
+Each beat is <code>pages-repo/review/takes/aplus/beat&lt;N&gt;/clip.mp4</code> (all silent, video-only) with its
+own <code>recordings/voice-shrey-v2/sh-v2-beat-&lt;N&gt;.wav</code> narration muxed in — extending whichever of
+the two (video or audio) was shorter with a frozen last frame / trailing silence so nothing gets cut short.
+Beats are bridged with a 240 ms solid-white flash (hard cut in, hard cut out) per
+<a href="../../docs/VISUAL-STYLE.md">docs/VISUAL-STYLE.md</a>'s "Transitions" spec, simplified for
+independently-produced clips rather than a live route-swap.</p>
+
+<h2>Per-beat numbers (video / audio / final padded length)</h2>
+<table>
+<tr><th>Beat</th><th>Silent clip</th><th>Narration audio</th><th>Final segment</th><th>Note</th></tr>
+<tr><td>1</td><td>9.60s</td><td>7.25s</td><td>9.60s</td><td>video longer, holds after narration ends</td></tr>
+<tr><td>2</td><td>4.56s</td><td>4.62s</td><td>4.62s</td><td>audio ~0.06s longer, video freeze-padded</td></tr>
+<tr><td>3</td><td>8.32s</td><td>5.69s</td><td>8.32s</td><td>video longer, holds</td></tr>
+<tr><td>4</td><td>8.52s</td><td>7.89s</td><td>8.52s</td><td>video longer, holds</td></tr>
+<tr><td>4b</td><td>3.76s</td><td>4.68s</td><td>4.68s</td><td>audio longer, video freeze-padded ~0.9s</td></tr>
+<tr><td>5</td><td>6.24s</td><td>2.81s</td><td>6.24s</td><td>video longer, holds</td></tr>
+<tr><td>6</td><td>7.32s</td><td>7.50s</td><td>7.50s</td><td>audio ~0.18s longer, video freeze-padded</td></tr>
+<tr><td>7</td><td>10.00s</td><td>13.82s</td><td>13.82s</td><td><b>provisional — see below</b>, video freeze-padded ~3.8s</td></tr>
+<tr><td>8</td><td>9.56s</td><td>8.46s</td><td>9.56s</td><td>video longer, holds</td></tr>
+<tr><td>9</td><td>8.52s</td><td>7.89s</td><td>8.52s</td><td>video longer, holds</td></tr>
+</table>
+<p class="m">Numbers are fresh <code>ffprobe</code> reads taken while assembling this draft (2026-09-27), not
+copied from docs/BEAT-FIT-ANALYSIS.md's own passes — several beats (4b/5/6) were mid-edit by other sessions
+this same day and had already moved since that doc's last pass, per its own directive to re-measure before
+using its numbers.</p>
+
+<div class="warn"><b>Beat 7 is provisional.</b> Its narration audio (<code>sh-v2-beat-7.wav</code>, confirmed
+by MD5 to be the 1.2x-tempo take with the approved trimmed 7b wording — "Follow-ups are queued, and feedback
+improves future drafts.") is final. But the beat's on-screen build
+(<code>scripts/scenes/scene7.ts</code>, feeding <code>beat7/clip.mp4</code>) is two text-generations behind:
+it's still driven by the old pre-v2 files (<code>narration.json</code> / <code>narration-timing-shrey.json</code>),
+with the old "reviews, edits and sends... with the account history... helps improve" wording, and its own
+declared duration (15.75s) matches neither the real audio (13.82s) nor its own rendered clip (10.00s). This
+is a known, not-yet-fixed gap — flagged repeatedly in <code>docs/BEAT-FIT-ANALYSIS.md</code>'s fifth/sixth
+passes, someone else's pending task. This assembly uses whatever's currently published for beat 7 (freeze-padding
+the silent tail from 10.00s to the audio's 13.82s so the audio isn't cut off) — <b>the whole assembly will need
+beat 7's segment replaced once that re-time lands.</b> The captions for beat 7 in the <code>.srt</code> already
+reflect the new, approved, actually-recorded wording (not what the clip currently shows).</p>
+</div>
+
+<h2>Not done here (next agent's job)</h2>
+<ul>
+<li>Frame-by-frame transition QC — the flash bridges are a first-draft implementation of the spec, not
+individually verified beat-by-beat.</li>
+<li>Beat 7's real re-time (video needs to be rebuilt against the final 13.82s audio once that work is scheduled).</li>
+<li>Volume/loudness beyond one pass of <code>loudnorm</code> across the final mix.</li>
+</ul>
+
+<p class="m"><a href="../">&larr; back to takes</a></p>
