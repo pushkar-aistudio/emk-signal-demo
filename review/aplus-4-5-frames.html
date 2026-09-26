@@ -1,0 +1,48 @@
+<!doctype html><meta charset="utf-8"><title>EMK Signal — Story A+ beats 4-5</title><style>body{font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;margin:0;padding:40px 24px;background:#fafafa;color:#18181b;max-width:960px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:32px 0 8px}p{color:#3f3f46}a{color:#1F3D7C}
+.m{color:#71717a;font-size:13px}.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-left:10px;vertical-align:2px;background:#026241;color:#fff}
+.note{background:#FFF4E5;border:1px solid #F6DDB0;border-radius:10px;padding:14px 16px;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.f img{width:100%;display:block;border:1px solid #e4e4e7;border-radius:6px;cursor:zoom-in}
+.cap{font-size:12px;color:#52525b;margin-top:4px}h3{font-size:15px;margin:22px 0 2px}.line{font-style:italic;color:#27272a;margin:0 0 10px;font-size:14px}</style>
+<h1>Story A+ — beats 4 and 5 <span class="badge">new</span></h1>
+<p class="m">docs/STORY-APLUS.md (a renumbering: this covers what the old storyboard called "Beat 4," split into two — sourcing/enrichment, then prioritisation/scoring — plus the new stage layout). Click a frame, arrow keys to move, Escape to close. <a href="rework-frames.html">&larr; Finalized beats</a></p>
+<div class="note">
+<b>Two things to know before comparing this against the "Finalized beats" grid:</b>
+<ul style="margin:8px 0 0;padding-left:20px">
+<li>Beat numbering here is <b>STORY-APLUS.md's</b>, not the old storyboard's — this is <i>not</i> a redo of the grid's old "Beat 4"/"Beat 5" cards (those are different content; the old "Beat 5, decision-makers" is STORY-APLUS's Beat 6 now). Left as its own card in the grid rather than overwriting those two, so nothing is mislabeled.</li>
+<li>Built against <b>docs/VISUAL-STYLE.md</b> + <b>docs/OVERLAY-RULES.md</b> (docs/SCENE-SPEC.md, which STORY-APLUS.md points to, does not exist on disk) — i.e. the flat/no-gradient system, <i>predates</i> docs/VISUAL-REWORK.md's gradient/3D-card pivot. Uploaded as-is per Pushkar's call rather than holding for a restyle; expect this to get a visual-rework pass.</li>
+</ul>
+</div>
+<p class="m">Stock voice (Kokoro af_heart) for timing only, pending Shrey — cue seconds are a word-count estimate, not a rendered duration (Kokoro's deps weren't available to render in-session). Company scores in the leads list were retuned from the live app's real values so Viridea lands at row 4 as specified — see <code>docs/APLUS-4-5-NOTES.md</code> in the main repo for the full list of open questions.</p>
+
+<h2>Beat 4 — Sourcing &rarr; one lookalike &rarr; enriched</h2>
+<p class="line">"It brings together what the business already knows: past customer conversations, accounts that look like the ones it has already won, and leads the team adds along the way. Then it fills in the picture from third-party databases and the web."</p>
+<div class="grid"><div class="f"><img src="takes/aplus/beat4/01-cards-in.png"><div class="cap">Product under glass, full frame — no stage yet</div></div><div class="f"><img src="takes/aplus/beat4/02-card-conversation.png"><div class="cap">Card 1 lands — previous customer conversation (Bianchi)</div></div><div class="f"><img src="takes/aplus/beat4/03-card-lookalike.png"><div class="cap">Card 2 lands — lookalike (Viridea)</div></div><div class="f"><img src="takes/aplus/beat4/04-card-team.png"><div class="cap">Card 3 lands — added by the team (Trade fair)</div></div><div class="f"><img src="takes/aplus/beat4/05-grow-into-stage.png"><div class="cap">Cards 1 and 3 fade; the lookalike grows into the stage — no converge</div></div><div class="f"><img src="takes/aplus/beat4/06-enrich-1.png"><div class="cap">Enrichment: description + size pop in</div></div><div class="f"><img src="takes/aplus/beat4/07-enrich-2.png"><div class="cap">Enrichment: revenue + sites pop in</div></div><div class="f"><img src="takes/aplus/beat4/08-enrich-3.png"><div class="cap">Enrichment: region + chips pop in</div></div><div class="f"><img src="takes/aplus/beat4/09-match-reason.png"><div class="cap">Match-reason row appears beneath the stats — hold</div></div></div>
+
+<h2>Transition 4 &rarr; 5 <span class="m" style="text-transform:none;font-weight:400">(the one that must be smooth)</span></h2>
+<div class="grid"><div class="f"><img src="takes/aplus/beat4/10-transition-4-5.png"><div class="cap">Transition: card shrinks into its row as the list reveals around it (~900ms, no cut). Left header swaps to Prioritises</div></div></div>
+
+<h2>Beat 5 — Prioritisation: the list, the score, the trigger</h2>
+<p class="line">"Every account is scored, so the team always knows where to start. And when a buying signal appears, like a new site opening, the score moves and the account moves with it."</p>
+<div class="grid"><div class="f"><img src="takes/aplus/beat5/11-list-settled.png"><div class="cap">Leads list, top six rows sorted by score. Viridea row 4 (78.0), 100%; rest 60%</div></div><div class="f"><img src="takes/aplus/beat5/12-trigger-in.png"><div class="cap">Buying-trigger note appears on Viridea's row</div></div><div class="f"><img src="takes/aplus/beat5/13-score-tick.png"><div class="cap">Score ticks 78.0 → 92.0, green ↑ 14</div></div><div class="f"><img src="takes/aplus/beat5/14-row-risen.png"><div class="cap">Row slides up past the three above it, lands at the top — hold</div></div></div>
+
+<p class="m"><a href="rework-frames.html">&larr; back to Finalized beats</a></p>
+<div id="lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;padding:48px">
+<button id="lbClose" aria-label="Close" style="position:absolute;top:18px;right:26px;background:none;border:none;color:#fff;font-size:36px;cursor:pointer;line-height:1">&times;</button>
+<img id="lbImg" style="max-width:100%;max-height:100%;border-radius:6px">
+</div>
+<script>(function(){
+var imgs=Array.prototype.slice.call(document.querySelectorAll('.f img'));
+var overlay=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),idx=-1;
+function show(i){idx=(i+imgs.length)%imgs.length;lbImg.src=imgs[idx].src;overlay.style.display='flex'}
+function close(){overlay.style.display='none'}
+imgs.forEach(function(img,i){img.addEventListener('click',function(){show(i)})});
+document.getElementById('lbClose').addEventListener('click',close);
+overlay.addEventListener('click',function(e){if(e.target===overlay)close()});
+document.addEventListener('keydown',function(e){
+if(overlay.style.display!=='flex')return;
+if(e.key==='Escape')close();
+else if(e.key==='ArrowRight')show(idx+1);
+else if(e.key==='ArrowLeft')show(idx-1);
+});
+})()</script>
