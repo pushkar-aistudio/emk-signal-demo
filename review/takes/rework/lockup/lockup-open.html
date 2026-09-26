@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <!--
-  Beat 2 opening lockup, built to match refs/Ascend Video v3.mp4's own opening lockup
-  frame-for-frame. Measured directly from the source at native 25fps (0.04s/frame):
-  docs/ref-frames/ascend-open-fine/*.png, tiled at docs/ref-frames/ascend-open-b{1,2,3}.png.
+  Beat 2 opening lockup — REWORK 2026-09-26 (Pushkar's direct order, supersedes the
+  glass-treated-dark version this file held before). Background rhythm now puts beats 2, 3, 9
+  on white (docs/style-test/beat-1-light.html "white one" mockup) instead of dark; beats
+  4/4b/5/6 take the dark gradient instead. See scripts/lib/design.ts's LIGHT_PAGE_* for the
+  shared page treatment (blobs + dots + corner marks) every white beat now uses.
 
-  Ascend's opening timeline (t=0 at video start):
+  Fact-check against the brief (which flagged "expected: white" for THIS reference itself):
+  refs/Ascend Video v3.mp4's own opening (docs/ref-frames/ascend-open-sheet.png) is actually
+  DARK, not white — a maroon/navy blurred gradient with a white pill card growing on it. Only
+  Ascend's CLOSING wipes to white. So "reproduce Ascend's opening exactly" (the per-letter
+  timing/easing/order below, still measured frame-for-frame from that same sheet) and "put
+  beat 2 on white" (our own rhythm, a deliberate inversion) are two separate asks — this file
+  does both: same typing motion/timing, recoloured for a white page with no card/box (a card
+  would be redundant chrome on a page that's already white). Posted as `decided` on the board.
+
+  Ascend's opening timeline (t=0 at video start, unchanged from the original measurement):
     t 0.00–0.56  background only, nothing on screen
     t 0.60–0.68  a thin caret fades in
-    t 0.68–0.92  the caret becomes an EMPTY white box that grows wider (no letters yet)
-    t 0.92–1.44  "EMK" types in, ~170ms/letter (box widens each letter)
-    t 1.44–1.92  "Capital" types in, faster, ~70ms/letter (box keeps widening)
+    t 0.68–0.92  caret holds (empty, no box now -- see above)
+    t 0.92–1.44  "EMK" types in, ~170ms/letter
+    t 1.44–1.92  "Signal" types in, faster, ~80ms/letter
     t 1.92–3.84  full wordmark holds, static, ~1.9s
     t 3.84–4.10  the whole lockup fades out (opacity only, ~260ms)
-  Colors on hold: E maroon, M navy, K green, "Capital" grey -- exactly our existing palette.
 
-  Deviations from Ascend, and why (see docs/LOCKUP-COMPARE.md for the full reasoning):
-    - No divider bar. Ascend's OPENING types "EMK Capital" as one continuous phrase with no
-      "|" -- the divider is a CLOSING-only device in the source (paired with the Ascend
-      mark). We reproduce that distinction: this file has no divider; lockup-close.html
-      does not either, for a different reason (see that file's header).
-    - "Signal" replaces "Capital" as the second word, kept in navy (not grey) -- "Signal" is
-      the product being introduced, not a de-emphasised descriptor, so it keeps the
-      existing brand color rather than adopting Ascend's grey.
-    - A tagline reveal is added after the wordmark (Ascend's opening has none -- Ascend
-      introduces its product name in a separate later beat we don't have room for). The
-      tagline's OWN reveal mechanic (thin rule + word-by-word, not character-by-character)
-      is borrowed faithfully from Ascend's CLOSING sequence instead -- see
-      lockup-close.html's header for that timing.
-    - Runs over the glass-treated product (dim + blur), not a separate page -- this file's
-      background is a stand-in dark gradient for isolated preview/comparison; integration
-      into the live product page happens separately once this is approved.
+  New this round: a thin vertical divider fades in between "EMK" and "Signal" (~80ms, right
+  after "EMK" finishes typing, before "Signal" starts) — direct instruction, matching the
+  divider Ascend's own CLOSING uses between its two words (Ascend's opening itself has no
+  divider; see docs/LOCKUP-COMPARE.md).
 
-  Exposes window.__in() (wordmark types in, ends holding), window.__showTagline() (call on
-  the tagline's own cue word), window.__out() (fades everything out). Caller controls when
-  each fires, same convention as assets/end-card.html's __endCardIn().
+  Exposes window.__in(cb) (wordmark types in, calls cb() once fully typed and held one beat),
+  window.__showTagline() (call on the tagline's own cue word), window.__out() (fades out).
 -->
 <html>
 <head>
 <meta charset="utf-8">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 1600px; height: 900px; overflow: hidden; background: #0a0a12; }
+  html, body { width: 1600px; height: 900px; overflow: hidden; background: #FAF9F6; }
   body { position: relative; font-family: "Geist Variable", -apple-system, sans-serif; }
 
-  /* Stand-in for "glass-treated product underneath" -- replaced by the real dimmed/blurred
-     product when this is wired into record.ts. */
-  .bg { position: absolute; inset: 0; overflow: hidden; }
-  .bg::before {
-    content: ""; position: absolute; inset: -20%;
-    background:
-      radial-gradient(circle at 25% 30%, rgba(140,34,50,.5) 0%, rgba(140,34,50,0) 45%),
-      radial-gradient(circle at 78% 25%, rgba(31,61,124,.5) 0%, rgba(31,61,124,0) 50%),
-      linear-gradient(180deg, #0a0a12 0%, #0d0d16 100%);
-    filter: blur(40px);
-  }
+  .page-bg { position: absolute; inset: 0; overflow: hidden; background: #FAF9F6; }
+  .page-bg .blob { position: absolute; width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(140,34,50,.16) 0%, rgba(140,34,50,0) 60%); filter: blur(10px); }
+  .page-bg .blob.b1 { top: -320px; right: -260px; }
+  .page-bg .blob.b2 { width: 700px; height: 700px; bottom: -260px; left: -200px;
+    background: radial-gradient(circle, rgba(31,61,124,.14) 0%, rgba(31,61,124,0) 60%); }
+  .page-dots { position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(24,24,27,.14) 1.4px, transparent 1.4px); background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 62%);
+    mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 62%); }
+  .page-corner { position: absolute; width: 17px; height: 17px; opacity: .55; }
+  .page-corner::before, .page-corner::after { content: ""; position: absolute; background: #8C2232; }
+  .page-corner::before { left: 50%; top: 0; width: 1.5px; height: 100%; transform: translateX(-50%); }
+  .page-corner::after { top: 50%; left: 0; height: 1.5px; width: 100%; transform: translateY(-50%); }
+  .page-corner.tl { left: 64px; top: 64px; } .page-corner.tr { right: 64px; top: 64px; }
+  .page-corner.bl { left: 64px; bottom: 64px; } .page-corner.br { right: 64px; bottom: 64px; }
 
-  .lockup { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; opacity: 1; transition: opacity 260ms ease; }
+  .lockup { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; opacity: 1; transition: opacity 260ms ease; z-index: 2; }
   .lockup.out { opacity: 0; }
 
-  #box {
-    background: #fff; border-radius: 18px; padding: 0 46px; height: 158px;
-    display: flex; align-items: center; box-shadow: 0 32px 84px -22px rgba(0,0,0,.65);
-    white-space: nowrap; width: 120px; opacity: 0;
-    transition: width 130ms linear, opacity 220ms ease;
-  }
-  #box.show { opacity: 1; }
-  #text { font-family: Georgia, "Times New Roman", serif; font-size: 88px; font-weight: 600; letter-spacing: -.01em; line-height: 1; }
-  #caret { display: inline-block; width: 5px; height: 68px; background: #18181B; margin-left: 8px; vertical-align: middle; animation: blink 1s step-end infinite; }
+  #wordrow { display: flex; align-items: center; }
+  #text, #textSignal { font-family: Georgia, "Times New Roman", serif; font-size: 96px; font-weight: 600; letter-spacing: -.01em; line-height: 1; white-space: nowrap; }
+  #caret { display: inline-block; width: 5px; height: 74px; background: #18181B; margin-left: 8px; vertical-align: middle; animation: blink 1s step-end infinite; }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  #divider { display: inline-block; width: 2px; height: 66px; background: rgba(24,24,27,.18); margin: 0 30px; opacity: 0; transition: opacity 220ms ease; vertical-align: middle; }
+  #divider.show { opacity: 1; }
 
-  #tagline { font-family: Georgia, "Times New Roman", serif; font-size: 27px; color: rgba(255,255,255,.9); text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 280ms ease, transform 280ms ease; }
+  #tagline { font-family: Georgia, "Times New Roman", serif; font-size: 27px; color: rgba(24,24,27,.62); text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 280ms ease, transform 280ms ease; }
   #tagline .rule { display: block; width: 64px; height: 2px; background: #8C2232; margin: 0 auto 18px; transform: scaleX(0); transform-origin: 50% 50%; transition: transform 320ms cubic-bezier(.2,.7,.2,1); }
   #tagline.show { opacity: 1; transform: translateY(0); }
   #tagline.show .rule { transform: scaleX(1); }
@@ -78,54 +76,71 @@
 </style>
 </head>
 <body>
-  <div class="bg"></div>
+  <div class="page-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <div class="page-dots"></div>
+  <div class="page-corner tl"></div><div class="page-corner tr"></div><div class="page-corner bl"></div><div class="page-corner br"></div>
+
   <div class="lockup" id="lockup">
-    <div id="box"><span id="text"></span><span id="caret"></span></div>
+    <div id="wordrow">
+      <span id="text"></span><span id="divider"></span><span id="textSignal"></span><span id="caret"></span>
+    </div>
     <div id="tagline"><span class="rule"></span><span id="tagline-words"></span></div>
   </div>
 
 <script>
-  var FULL = "EMK Signal"; // typed as ONE continuous phrase, no divider -- see header
-  var COLORS = { E: '#8C2232', M: '#1F3D7C', K: '#026241' }; // rest ("Signal") stays navy
+  var EMK = "EMK", SIGNAL = "Signal";
+  var COLORS = { E: '#8C2232', M: '#1F3D7C', K: '#026241' };
   var TAGLINE = "AI-powered go-to-market automation platform";
 
-  var box = document.getElementById('box'), text = document.getElementById('text'), caret = document.getElementById('caret');
+  var text = document.getElementById('text'), caret = document.getElementById('caret'), divider = document.getElementById('divider');
   var lockup = document.getElementById('lockup'), tagline = document.getElementById('tagline'), taglineWords = document.getElementById('tagline-words');
 
-  function widthFor() { return box.scrollWidth; }
+  var textSignal = document.getElementById('textSignal');
+  textSignal.style.color = '#1F3D7C';
 
-  function renderChars(n) {
-    var slice = FULL.slice(0, n), html = '';
+  function renderEMK(n) {
+    var slice = EMK.slice(0, n), html = '';
     for (var i = 0; i < slice.length; i++) {
       var ch = slice[i];
-      var col = ch === 'E' ? COLORS.E : ch === 'M' ? COLORS.M : ch === 'K' && i === 2 ? COLORS.K : (i < 3 ? '#18181B' : '#1F3D7C');
-      html += '<span style="color:' + col + '">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+      var col = ch === 'E' ? COLORS.E : ch === 'M' ? COLORS.M : COLORS.K;
+      html += '<span style="color:' + col + '">' + ch + '</span>';
     }
     text.innerHTML = html;
-    box.style.width = (widthFor() + 96 + 13) + 'px';
   }
 
-  // window.__in(): caret -> empty box grows -> "EMK" (170ms/letter) -> "Signal" (80ms/letter)
-  // -> holds. Matches Ascend's own measured per-phase timings (see header).
+  // window.__in(cb): caret -> "EMK" (170ms/letter) -> divider fades in -> "Signal" (80ms/letter)
+  // -> holds one beat, then cb().
   window.__in = function (cb) {
-    box.classList.add('show');
     setTimeout(function () {
       var i = 1;
-      var EMK_PER = 170, REST_PER = 80;
-      function step() {
-        renderChars(i);
-        if (i >= FULL.length) { caret.style.display = 'none'; if (cb) cb(); return; }
-        var per = i < 3 ? EMK_PER : REST_PER;
+      function stepEMK() {
+        renderEMK(i);
+        if (i >= EMK.length) { afterEMK(); return; }
         i++;
-        setTimeout(step, per);
+        setTimeout(stepEMK, 170);
       }
-      step();
-    }, 240); // matches the ~240ms empty-box-grows phase before the first letter
+      stepEMK();
+    }, 80); // caret-hold phase before the first letter
+
+    function afterEMK() {
+      caret.style.display = 'none';
+      setTimeout(function () {
+        divider.classList.add('show');
+        setTimeout(function () {
+          var j = 1;
+          function stepSignal() {
+            textSignal.textContent = SIGNAL.slice(0, j);
+            if (j >= SIGNAL.length) { if (cb) setTimeout(cb, 480); return; }
+            j++;
+            setTimeout(stepSignal, 80);
+          }
+          stepSignal();
+        }, 160);
+      }, 40);
+    }
   };
 
-  // window.__showTagline(): thin rule draws, then each word fades in in sequence --
-  // reproduces the CLOSING sequence's word-by-word tagline reveal (not character-by-
-  // character), the only piece of Ascend's opening this file borrows from elsewhere.
+  // window.__showTagline(): thin rule draws, then each word fades in in sequence.
   window.__showTagline = function () {
     var words = TAGLINE.split(' ');
     taglineWords.innerHTML = words.map(function (w) { return '<span class="word">' + w + '</span>'; }).join(' ');

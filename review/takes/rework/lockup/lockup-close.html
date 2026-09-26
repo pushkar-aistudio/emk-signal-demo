@@ -20,12 +20,14 @@
     t 1.64+       holds; a soft gradient arc fades in at the bottom of the frame
 
   Deviations from Ascend, and why (see docs/LOCKUP-COMPARE.md):
-    - No divider + partner mark. Ascend's closing co-brands two DIFFERENT entities (EMK
-      Capital, the parent; Ascend, the product) with a divider between them. Our lockup is
-      a single entity -- "EMK Signal" already names both parent and product -- so there is
-      no second mark to divide against. Everything else (the iris wipe, the instant
-      wordmark appearance, the rule + word-by-word tagline, the closing gradient arc) is
-      reproduced as measured.
+    - No partner mark. Ascend's closing co-brands two DIFFERENT entities (EMK Capital, the
+      parent; Ascend, the product) with a divider AND a second logo. Our lockup is a single
+      entity -- "EMK Signal" already names both parent and product -- so there is no second
+      mark to draw in. Everything else (the iris wipe, the instant wordmark appearance, the
+      rule + word-by-word tagline, the closing gradient arc) is reproduced as measured.
+    - REWORK 2026-09-26: a thin "EMK | Signal" divider IS now kept (direct instruction,
+      matching beat 2's opening divider for rhythm) even though there's no second mark
+      beside it -- it separates the two words of our own lockup instead of two entities.
     - Tagline is Shrey's actual closing line, not Ascend's.
 
   Exposes window.__in() (plays the wipe, then the wordmark, in one call) and
@@ -56,9 +58,11 @@
   .card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; opacity: 0; }
   .card.show { opacity: 1; }
 
-  #wordmark { display: flex; align-items: baseline; gap: 0; }
+  #wordmark { display: flex; align-items: center; gap: 0; }
   #wordmark span { font-family: Georgia, "Times New Roman", serif; font-size: 128px; font-weight: 600; letter-spacing: -.01em; }
-  #wordmark .e { color: #8C2232; } #wordmark .m { color: #1F3D7C; } #wordmark .k { color: #026241; } #wordmark .rest { color: #1F3D7C; margin-left: 4px; }
+  #wordmark .e { color: #8C2232; } #wordmark .m { color: #1F3D7C; } #wordmark .k { color: #026241; } #wordmark .rest { color: #1F3D7C; margin-left: 0; }
+  #wmDivider { display: inline-block; width: 2px; height: 92px; background: rgba(24,24,27,.18); margin: 0 34px; opacity: 0; transition: opacity 200ms ease; }
+  #wmDivider.show { opacity: 1; }
 
   #tagline-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
   #rule { width: 64px; height: 2px; background: #8C2232; transform: scaleX(0); transform-origin: 50%; transition: transform 220ms cubic-bezier(.2,.7,.2,1); }
@@ -80,7 +84,7 @@
   <div id="wipe"></div>
   <div class="card" id="card">
     <div id="wordmark">
-      <span class="e">E</span><span class="m">M</span><span class="k">K</span><span class="rest">&nbsp;Signal</span>
+      <span class="e">E</span><span class="m">M</span><span class="k">K</span><span id="wmDivider"></span><span class="rest">Signal</span>
     </div>
     <div id="tagline-wrap">
       <div id="rule"></div>
@@ -94,6 +98,7 @@
 
   var wipe = document.getElementById('wipe'), card = document.getElementById('card');
   var rule = document.getElementById('rule'), taglineWords = document.getElementById('tagline-words'), arc = document.getElementById('arc');
+  var wmDivider = document.getElementById('wmDivider');
 
   window.__in = function (cb) {
     // t=0.00-0.16: hold on the dark pre-scene (caller should already be here)
@@ -106,6 +111,10 @@
       // t=0.44-ish: wordmark appears INSTANTLY, no typewriter
       card.classList.add('show');
     }, 440);
+    setTimeout(function () {
+      // t=0.60: EMK | Signal divider fades in -- new this round, matches beat 2's opening
+      wmDivider.classList.add('show');
+    }, 600);
     setTimeout(function () {
       // t=0.84: rule draws
       rule.classList.add('show');
