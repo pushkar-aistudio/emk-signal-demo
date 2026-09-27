@@ -27,26 +27,26 @@ It searches relevant third-party databases and the web to enrich company informa
 Then it prioritises accounts using buying signals.
 
 8
-00:00:34,374 --> 00:00:41,873
+00:00:35,860 --> 00:00:43,359
 Signal then identifies decision-makers, retrieves contact details and prepares tailored outreach across email, LinkedIn and calls in their language.
 
 9
-00:00:42,113 --> 00:00:50,878
+00:00:43,599 --> 00:00:52,364
 For ServiceKey, that could mean an email in Italian to a facilities director, connecting the prospect's expansion with ServiceKey's experience supporting similar sites.
 
 10
-00:00:50,878 --> 00:00:52,693
+00:00:52,364 --> 00:00:54,179
 The salesperson reviews and sends.
 
 11
-00:00:52,693 --> 00:00:55,928
+00:00:54,179 --> 00:00:57,414
 Follow-ups are queued, and feedback improves future drafts.
 
 12
-00:00:56,168 --> 00:01:04,623
+00:00:57,654 --> 00:01:06,109
 For management, the Command Centre shows the funnel, where follow-ups are overdue or accounts have stalled, and activity by salesperson, allowing speedier intervention.
 
 13
-00:01:04,863 --> 00:01:12,750
+00:01:06,349 --> 00:01:14,236
 EMK Signal puts the company's collective knowledge behind every salesperson, and gives them more time for what matters most: being in front of customers.
 
