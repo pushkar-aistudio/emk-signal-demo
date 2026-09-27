@@ -6,65 +6,82 @@ table{border-collapse:collapse;font-size:13px;width:100%}td,th{border:1px solid 
 .warn{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d;border-radius:8px;padding:12px 16px;margin:12px 0}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:2px;background:#8C2232;color:#fff}
 </style>
-<h1>EMK Signal — first full-draft assembly <span class="badge">v1, draft</span></h1>
-<div class="disclaimer">This is the first time all nine beats (ten rows — beat 7 covers both 7a/7b) have been
-concatenated into one video. It is a first draft to react to, not a finished cut — expect rough transition
-seams, exactly like the last project's single-take assembly. A second pass will do the deep frame-by-frame
-QC; this page only confirms the assembly holds together.</div>
+<h1>EMK Signal — first full-draft assembly <span class="badge">v1.1, QC pass</span></h1>
+<div class="disclaimer">Deep frame-by-frame QC pass complete (2026-09-27). Two real assembly-pipeline bugs
+were found and fixed — see below — and the draft was rebuilt. All nine beat-to-beat transitions were
+re-verified frame-accurate after the fix and read as clean, quick flash-cuts with no dead pauses and no
+torn frames. Duration dropped from ~83.5s to ~72.8s as a direct result (the removed time was silent dead
+air, not content).</div>
 
 <video controls preload="metadata" width="100%" src="emk-signal-final-draft-v1.mp4" style="border-radius:8px;border:1px solid #e4e4e7;background:#000"></video>
 <p class="m"><a href="emk-signal-final-draft-v1.mp4">emk-signal-final-draft-v1.mp4</a> ·
-<a href="emk-signal-final-draft-v1.srt">emk-signal-final-draft-v1.srt</a> · duration ~1:23.5</p>
+<a href="emk-signal-final-draft-v1.srt">emk-signal-final-draft-v1.srt</a> · duration ~1:12.8</p>
 
-<h2>What this is</h2>
-<p>Beat order: 1 → 2 → 3 → 4 → 4b → 5 → 6 → 7 → 8 → 9, confirmed against
-<a href="../../docs/SCRIPT-DRAFT.md">docs/SCRIPT-DRAFT.md</a> and <a href="../../docs/BEAT-FIT-ANALYSIS.md">docs/BEAT-FIT-ANALYSIS.md</a>.
-Each beat is <code>pages-repo/review/takes/aplus/beat&lt;N&gt;/clip.mp4</code> (all silent, video-only) with its
-own <code>recordings/voice-shrey-v2/sh-v2-beat-&lt;N&gt;.wav</code> narration muxed in — extending whichever of
-the two (video or audio) was shorter with a frozen last frame / trailing silence so nothing gets cut short.
-Beats are bridged with a 240 ms solid-white flash (hard cut in, hard cut out) per
-<a href="../../docs/VISUAL-STYLE.md">docs/VISUAL-STYLE.md</a>'s "Transitions" spec, simplified for
-independently-produced clips rather than a live route-swap.</p>
+<h2>What changed in this QC pass</h2>
+<p><b>Bug 1 — silent dead-air pauses before every flash-cut.</b> The original assembly padded whichever of
+a beat's video/audio was <i>shorter</i> up to match the longer one. For six of the ten rows (1, 3, 4, 5, 8, 9)
+the silent video clip ran longer than its own narration, so the assembly stretched the audio with trailing
+silence to match — beat 5 alone got 3.35s of dead silence tacked onto a 2.81s line. That silent hold, right
+before every white-flash cut, is what read as "the transition pauses and the video feels disconnected."
+Fixed in <code>scripts/assemble-final.sh</code>: each segment's length is now always the beat's own narration
+length (durA) — "the video follows the voice," this project's own stated convention — so a clip longer than
+its narration is trimmed to the narration's end instead of stretching the audio with silence. A clip
+<i>shorter</i> than its narration still freezes its last frame (beats 2, 4b, 6 — nothing else to show).</p>
+<p><b>Bug 2 — a torn/corrupted frame right after the beat 3→4 cut.</b> Frame-accurate extraction found a
+genuinely corrupted frame (top-left ~47% showing real content, the rest flat grey) landing exactly on the
+first visible frame after the flash into beat 4. Traced to its source: <code>beat4/clip.mp4</code>'s own
+frame 0 is that corrupted frame (confirmed in the raw take itself, before assembly ever touches it — frame 1,
+40ms later, is clean). The source clip wasn't touched; the assembly now starts reading that one input 40ms
+in (the same front-of-take-preamble trim this project already uses elsewhere), so the corrupted frame is
+never selected.</p>
+<p>Also picked up beat 7's real re-time (<code>1ec1ea5</code>/<code>23eead7</code>, landed on this same repo
+mid-QC) — its old 10.00s clip and 3.8s freeze-pad are gone; the new 14.56s clip trims cleanly to its 13.82s
+audio like every other beat now.</p>
 
-<h2>Per-beat numbers (video / audio / final padded length)</h2>
+<h2>What is NOT an assembly bug (reported, not fixed here)</h2>
+<ul>
+<li>Beat 3's three source-snippet cards land visibly ~1.2s after their respective cue words
+("which accounts" / "who" / "what to say"), consistently — verified identical in the isolated
+<code>beat3/clip.mp4</code>, so it's baked into that beat's own choreography, not introduced by muxing.</li>
+<li>Beat 1's "multiplying the work" cue (6.34s into its own clip) lands while the account-grid visual is
+already well into its own fade-to-white — could be intentional (fading out to represent scale), flagging
+since it's ambiguous rather than asserting it's wrong.</li>
+</ul>
+
+<h2>Per-beat numbers (video / audio / final segment length)</h2>
 <table>
 <tr><th>Beat</th><th>Silent clip</th><th>Narration audio</th><th>Final segment</th><th>Note</th></tr>
-<tr><td>1</td><td>9.60s</td><td>7.25s</td><td>9.60s</td><td>video longer, holds after narration ends</td></tr>
+<tr><td>1</td><td>9.60s</td><td>7.25s</td><td>7.25s</td><td>trimmed to narration (was: held 2.35s silent)</td></tr>
 <tr><td>2</td><td>4.56s</td><td>4.62s</td><td>4.62s</td><td>audio ~0.06s longer, video freeze-padded</td></tr>
-<tr><td>3</td><td>8.32s</td><td>5.69s</td><td>8.32s</td><td>video longer, holds</td></tr>
-<tr><td>4</td><td>8.52s</td><td>7.89s</td><td>8.52s</td><td>video longer, holds</td></tr>
+<tr><td>3</td><td>8.32s</td><td>5.69s</td><td>5.69s</td><td>trimmed to narration (was: held 2.64s silent)</td></tr>
+<tr><td>4</td><td>8.48s*</td><td>7.89s</td><td>7.89s</td><td>*starts 40ms in (skips corrupted frame 0); trimmed to narration</td></tr>
 <tr><td>4b</td><td>3.76s</td><td>4.68s</td><td>4.68s</td><td>audio longer, video freeze-padded ~0.9s</td></tr>
-<tr><td>5</td><td>6.24s</td><td>2.81s</td><td>6.24s</td><td>video longer, holds</td></tr>
-<tr><td>6</td><td>7.32s</td><td>7.50s</td><td>7.50s</td><td>audio ~0.18s longer, video freeze-padded</td></tr>
-<tr><td>7</td><td>10.00s</td><td>13.82s</td><td>13.82s</td><td><b>provisional — see below</b>, video freeze-padded ~3.8s</td></tr>
-<tr><td>8</td><td>9.56s</td><td>8.46s</td><td>9.56s</td><td>video longer, holds</td></tr>
-<tr><td>9</td><td>8.52s</td><td>7.89s</td><td>8.52s</td><td>video longer, holds</td></tr>
+<tr><td>5</td><td>6.16s</td><td>2.81s</td><td>2.81s</td><td>trimmed to narration (was: held 3.35s silent)</td></tr>
+<tr><td>6</td><td>6.88s</td><td>7.50s</td><td>7.50s</td><td>audio ~0.62s longer, video freeze-padded</td></tr>
+<tr><td>7</td><td>14.56s</td><td>13.82s</td><td>13.82s</td><td>re-timed clip (was 10.00s/3.8s freeze); now trims cleanly</td></tr>
+<tr><td>8</td><td>9.56s</td><td>8.46s</td><td>8.46s</td><td>trimmed to narration (was: held 1.1s silent)</td></tr>
+<tr><td>9</td><td>8.52s</td><td>7.89s</td><td>7.89s</td><td>trimmed to narration (was: held 0.63s silent)</td></tr>
 </table>
-<p class="m">Numbers are fresh <code>ffprobe</code> reads taken while assembling this draft (2026-09-27), not
-copied from docs/BEAT-FIT-ANALYSIS.md's own passes — several beats (4b/5/6) were mid-edit by other sessions
-this same day and had already moved since that doc's last pass, per its own directive to re-measure before
-using its numbers.</p>
+<p class="m">Numbers are fresh <code>ffprobe</code> reads taken during this QC pass (2026-09-27).</p>
 
-<div class="warn"><b>Beat 7 is provisional.</b> Its narration audio (<code>sh-v2-beat-7.wav</code>, confirmed
-by MD5 to be the 1.2x-tempo take with the approved trimmed 7b wording — "Follow-ups are queued, and feedback
-improves future drafts.") is final. But the beat's on-screen build
-(<code>scripts/scenes/scene7.ts</code>, feeding <code>beat7/clip.mp4</code>) is two text-generations behind:
-it's still driven by the old pre-v2 files (<code>narration.json</code> / <code>narration-timing-shrey.json</code>),
-with the old "reviews, edits and sends... with the account history... helps improve" wording, and its own
-declared duration (15.75s) matches neither the real audio (13.82s) nor its own rendered clip (10.00s). This
-is a known, not-yet-fixed gap — flagged repeatedly in <code>docs/BEAT-FIT-ANALYSIS.md</code>'s fifth/sixth
-passes, someone else's pending task. This assembly uses whatever's currently published for beat 7 (freeze-padding
-the silent tail from 10.00s to the audio's 13.82s so the audio isn't cut off) — <b>the whole assembly will need
-beat 7's segment replaced once that re-time lands.</b> The captions for beat 7 in the <code>.srt</code> already
-reflect the new, approved, actually-recorded wording (not what the clip currently shows).</p>
+<div class="warn"><b>Beat 7</b> was re-timed (<code>scene7.ts</code> fixed to import the real v2 narration/timing
+under the right keys) partway through this QC pass and is now included above — its clip and audio finally
+match. Not re-verified further beyond the transition-boundary and loudness checks below.</p>
 </div>
 
-<h2>Not done here (next agent's job)</h2>
+<h2>QC done this pass</h2>
 <ul>
-<li>Frame-by-frame transition QC — the flash bridges are a first-draft implementation of the spec, not
-individually verified beat-by-beat.</li>
-<li>Beat 7's real re-time (video needs to be rebuilt against the final 13.82s audio once that work is scheduled).</li>
-<li>Volume/loudness beyond one pass of <code>loudnorm</code> across the final mix.</li>
+<li>All 9 beat-to-beat transitions: frame-accurate extraction before/during/after each flash, both video
+(clean cut, no torn frames, ~0.24–0.28s solid white) and audio (no clicks/pops/clipping at any seam,
+via sample-level jump detection).</li>
+<li>Cue-to-visual sync spot-checked across 7 beats (1, 3, 4, 5, 6, 8, and the closing card) against
+<code>docs/CUE-MAP.md</code>'s onsets, projected into the full assembled timeline — all landed on/near
+their cue except the two beat-3/beat-1 observations noted above (both upstream, not assembly bugs).</li>
+<li>Overall audio: per-beat <code>volumedetect</code> pass (mean -18.6 to -19.1 dB, max -5.3 to -6.3 dB
+across all 10 rows — tight and consistent) and a full-track <code>silencedetect</code> pass confirming
+continuous audio with no dropouts and no accumulated drift by the final beat.</li>
+<li>Captions spot-checked against the real muxed audio's silence gaps (not just internal consistency) —
+four boundary/sentence timestamps matched actual speech onset/offset within ~100ms.</li>
 </ul>
 
 <p class="m"><a href="../">&larr; back to takes</a></p>

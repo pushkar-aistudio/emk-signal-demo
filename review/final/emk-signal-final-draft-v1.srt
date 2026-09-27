@@ -3,50 +3,50 @@
 How do you give every promising account the depth of preparation and follow-through you would give your most important opportunity, without multiplying the work?
 
 2
-00:00:09,840 --> 00:00:14,460
+00:00:07,488 --> 00:00:12,108
 EMK Signal, EMK's AI-powered go-to-market platform, is built to do just that.
 
 3
-00:00:14,700 --> 00:00:18,490
+00:00:12,348 --> 00:00:16,138
 It works out which accounts to go after, who to speak to, and what to say.
 
 4
-00:00:18,490 --> 00:00:20,385
+00:00:16,138 --> 00:00:18,033
 And each reply makes the next one sharper.
 
 5
-00:00:23,260 --> 00:00:31,147
+00:00:18,273 --> 00:00:26,160
 It brings together fragmented data from CRMs, inboxes and the team's own leads, and finds prospects like successful customers.
 
 6
-00:00:32,020 --> 00:00:36,700
+00:00:26,400 --> 00:00:31,080
 It searches relevant third-party databases and the web to enrich company information.
 
 7
-00:00:36,940 --> 00:00:39,754
+00:00:31,320 --> 00:00:34,134
 Then it prioritises accounts using buying signals.
 
 8
-00:00:43,420 --> 00:00:50,919
+00:00:34,374 --> 00:00:41,873
 Signal then identifies decision-makers, retrieves contact details and prepares tailored outreach across email, LinkedIn and calls in their language.
 
 9
-00:00:51,159 --> 00:00:59,924
+00:00:42,113 --> 00:00:50,878
 For ServiceKey, that could mean an email in Italian to a facilities director, connecting the prospect's expansion with ServiceKey's experience supporting similar sites.
 
 10
-00:00:59,924 --> 00:01:01,739
+00:00:50,878 --> 00:00:52,693
 The salesperson reviews and sends.
 
 11
-00:01:01,739 --> 00:01:04,974
+00:00:52,693 --> 00:00:55,928
 Follow-ups are queued, and feedback improves future drafts.
 
 12
-00:01:05,214 --> 00:01:13,670
+00:00:56,168 --> 00:01:04,623
 For management, the Command Centre shows the funnel, where follow-ups are overdue or accounts have stalled, and activity by salesperson, allowing speedier intervention.
 
 13
-00:01:15,014 --> 00:01:22,901
+00:01:04,863 --> 00:01:12,750
 EMK Signal puts the company's collective knowledge behind every salesperson, and gives them more time for what matters most: being in front of customers.
 
